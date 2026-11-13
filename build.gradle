@@ -1,0 +1,105 @@
+plugins {
+    id 'java-library'
+    id 'net.neoforged.moddev' version '2.0.148'
+}
+
+group = 'ca.emilybelnavis.mcmods.createtransit'
+version = '0.1.0-alpha'
+
+java {
+    toolchain.languageVersion = JavaLanguageVersion.of(21)
+    withSourcesJar()
+}
+
+repositories { mavenCentral() }
+
+sourceSets {
+    smoke {
+        compileClasspath += sourceSets.main.output
+        runtimeClasspath += sourceSets.main.output
+    }
+}
+configurations.smokeImplementation.extendsFrom(configurations.implementation)
+
+def developmentMods = fileTree('libs') { include '*.jar' }
+dependencies {
+    implementation developmentMods
+    testImplementation platform('org.junit:junit-bom:5.11.4')
+    testImplementation 'org.junit.jupiter:junit-jupiter'
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+}
+
+neoForge {
+    version = '21.1.252'
+    runs {
+        client {
+            client()
+            gameDirectory = file('run/client')
+        }
+        server {
+            server()
+            gameDirectory = file('run/server')
+            programArgument '--nogui'
+        }
+    }
+    mods {
+        create_transit { sourceSet sourceSets.main }
+    }
+    addModdingDependenciesTo(sourceSets.test)
+    addModdingDependenciesTo(sourceSets.smoke)
+    if (providers.gradleProperty('smokeTest').isPresent()) {
+        mods {
+            create_transit_smoke { sourceSet sourceSets.smoke }
+        }
+        runs.client {
+            systemProperty 'create_transit.smokeReport', file('build/verification/client-startup.json').absolutePath
+        }
+    }
+}
+
+tasks.withType(JavaCompile).configureEach {
+    options.encoding = 'UTF-8'
+    options.release = 21
+}
+
+tasks.register('verifyDevMods') {
+    group = 'verification'
+    description = 'Verify the pinned Create, Economy and extracted runtime libraries.'
+    inputs.file('config/dev-mods.lock.json')
+    inputs.files(developmentMods)
+    doLast {
+        def lock = new groovy.json.JsonSlurper().parse(file('config/dev-mods.lock.json'))
+        def expected = lock.artifacts.collect { it.filename } as Set
+        if (developmentMods.files.collect { it.name } as Set != expected) {
+            throw new GradleException('Missing or unexpected development jars. Run tools/import-dev-mods.py; see README.md.')
+        }
+        lock.artifacts.each { spec ->
+            def artifact = file('libs/' + spec.filename)
+            def digest = java.security.MessageDigest.getInstance('SHA-256').digest(artifact.bytes).encodeHex().toString()
+            if (digest != spec.sha256) throw new GradleException('Development dependency checksum mismatch: ' + spec.filename)
+        }
+    }
+}
+
+tasks.named('compileJava') { dependsOn tasks.named('verifyDevMods') }
+tasks.named('runClient') { dependsOn tasks.named('verifyDevMods') }
+tasks.named('runServer', JavaExec) {
+    dependsOn tasks.named('verifyDevMods')
+    standardInput = System.in
+}
+tasks.named('test') { useJUnitPlatform() }
+
+if (providers.gradleProperty('smokeTest').isPresent()) {
+    tasks.named('runClient') {
+        doFirst { delete('build/verification/client-startup.json') }
+        doLast {
+            def report = file('build/verification/client-startup.json')
+            if (!report.exists()) throw new GradleException('Client did not reach the title screen with the required mods.')
+        }
+    }
+}
+
+processResources {
+    inputs.property('modVersion', project.version)
+    filesMatching('META-INF/neoforge.mods.toml') { expand(modVersion: project.version) }
+}

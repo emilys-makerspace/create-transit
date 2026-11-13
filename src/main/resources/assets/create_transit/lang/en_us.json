@@ -1,0 +1,4 @@
+{
+  "commands.create_transit.status": "Create Transit: Economy integration %s (banking API 3). Development foundation; machines are not implemented yet.",
+  "commands.create_transit.fare": "Zone difference %s: CAD %s total. Fare preview only; no payment taken."
+}

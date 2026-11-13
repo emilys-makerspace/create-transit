@@ -1,0 +1,35 @@
+modLoader="javafml"
+loaderVersion="[4,)"
+license="All Rights Reserved"
+
+[[mods]]
+modId="create_transit"
+version="${modVersion}"
+displayName="Create Transit"
+description='''Public transit fares, cards and tickets for Create trains. Development foundation.'''
+
+[[dependencies.create_transit]]
+modId="minecraft"
+type="required"
+versionRange="[1.21.1]"
+side="BOTH"
+
+[[dependencies.create_transit]]
+modId="neoforge"
+type="required"
+versionRange="[21.1.252]"
+side="BOTH"
+
+[[dependencies.create_transit]]
+modId="create"
+type="required"
+versionRange="[6.0.10]"
+ordering="AFTER"
+side="BOTH"
+
+[[dependencies.create_transit]]
+modId="economy"
+type="required"
+versionRange="[0.6.0-alpha]"
+ordering="AFTER"
+side="BOTH"

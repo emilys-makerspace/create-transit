@@ -1,0 +1,5 @@
+{
+  "version": "0.6.0-alpha",
+  "sourceTreeSha256": "c641b36fdf49b369fd0b45a9de5ffc03bc9b928b5f9124a99a496172a97ebe28",
+  "note": "Isolated build of the neighboring Economy src/main snapshot; original project untouched. Minimal NeoForge build uses the same Java, NeoForge, access transformer and SQLite versions."
+}

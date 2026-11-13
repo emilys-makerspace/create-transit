@@ -1,0 +1,20 @@
+// Isolated development-only build for the fingerprinted Economy src/main snapshot.
+plugins {
+    id 'java-library'
+    id 'net.neoforged.moddev' version '2.0.148'
+}
+group = 'ca.emilybelnavis.mcmods.economy'
+version = '0.6.0-alpha'
+java { toolchain.languageVersion = JavaLanguageVersion.of(21) }
+repositories { mavenCentral() }
+neoForge {
+    version = '21.1.252'
+    accessTransformers.from('src/main/resources/META-INF/accesstransformer.cfg')
+}
+dependencies {
+    implementation('org.xerial:sqlite-jdbc:3.53.4.0') { transitive = false }
+    jarJar('org.xerial:sqlite-jdbc:3.53.4.0') {
+        transitive = false
+        version { strictly '[3.53.4.0]'; prefer '3.53.4.0' }
+    }
+}

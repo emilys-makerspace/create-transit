@@ -1,0 +1,13 @@
+modLoader="javafml"
+loaderVersion="[4,)"
+license="All Rights Reserved"
+[[mods]]
+modId="create_transit_smoke"
+version="1.0.0"
+displayName="Create Transit Development Startup Check"
+[[dependencies.create_transit_smoke]]
+modId="create_transit"
+type="required"
+versionRange="[0.1.0-alpha]"
+ordering="AFTER"
+side="BOTH"

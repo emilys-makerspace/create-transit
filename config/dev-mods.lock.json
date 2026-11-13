@@ -1,0 +1,42 @@
+{
+  "originals": [
+    {
+      "filename": "create-1.21.1-6.0.10.jar",
+      "sha256": "ef87fe5709f1ba1f5b8bb20a2925b5afb4669e178fd6d8bf10c167759eefe37a",
+      "declaredVersion": "6.0.10",
+      "developmentCorrection": null
+    },
+    {
+      "filename": "economy-0.6.0-alpha.jar",
+      "sha256": "b6367bcc04d43a7ea9a537bf7b0f219f5eb91f63d4b4abccb7381278cc5af319",
+      "declaredVersion": "0.4.0-alpha",
+      "developmentCorrection": "Development copy only: corrected stale mod descriptor 0.4.0-alpha to 0.6.0-alpha; class files unchanged."
+    }
+  ],
+  "artifacts": [
+    {
+      "filename": "Registrate-MC1.21-1.3.0+67.jar",
+      "sha256": "510f4041c41739f1d8ea8850ab8364d3e3a5fada8529beed5d9f479e2523db52"
+    },
+    {
+      "filename": "create-1.21.1-6.0.10.jar",
+      "sha256": "ef87fe5709f1ba1f5b8bb20a2925b5afb4669e178fd6d8bf10c167759eefe37a"
+    },
+    {
+      "filename": "economy-0.6.0-alpha.jar",
+      "sha256": "433cc4e168efb29dfc21569de9dff85af8d322682834e00e2b7c226aa8807f62"
+    },
+    {
+      "filename": "flywheel-neoforge-1.21.1-1.0.6.jar",
+      "sha256": "31dda15c205eb596d3b3449ef03f6af7363a6cd35b3da4bfe916b304f9e5337e"
+    },
+    {
+      "filename": "ponder-neoforge-1.0.82+mc1.21.1.jar",
+      "sha256": "0cf4611ad853042b689ac386184c5bbe02950efcffddb49e5f604e82baddb0dc"
+    },
+    {
+      "filename": "sqlite-jdbc-3.53.4.0.jar",
+      "sha256": "bcb1f51e36f940867e83342f9efbf5968ac44a6bef4d397bb4af7b17b45cd2fb"
+    }
+  ]
+}
